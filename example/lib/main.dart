@@ -29,7 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   DateTime _selectedValue = DateTime.now();
 
-
   @override
   void initState() {
     super.initState();
@@ -38,12 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.replay),
-        onPressed: () {
-          _controller.animateToSelection();
-        },
-      ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.replay),
+          onPressed: () {
+            _controller.animateToSelection();
+          },
+        ),
         appBar: AppBar(
           title: Text(widget.title!),
         ),
@@ -64,17 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 child: DatePicker(
                   DateTime.now(),
+                  markDateWidget: Icon(Icons.coffee_outlined),
                   width: 60,
-                  height: 80,
+                  height: 180,
+                  innerWidgetHeight: 90,
                   controller: _controller,
                   initialSelectedDate: DateTime.now(),
-                  selectionColor: Colors.black,
-                  selectedTextColor: Colors.white,
-                  inactiveDates: [
-                    DateTime.now().add(Duration(days: 3)),
-                    DateTime.now().add(Duration(days: 4)),
-                    DateTime.now().add(Duration(days: 7))
-                  ],
+                  selectionColor: Color.fromARGB(255, 99, 114, 107),
+                  dateTextStyle: TextStyle(color: Colors.black),
+                  dayTextStyle: TextStyle(color: Colors.black),
+                  selectedTextColor: Colors.black,
+                  // inactiveDates: [
+                  //   DateTime.now().add(Duration(days: 3)),
+                  //   DateTime.now().add(Duration(days: 4)),
+                  //   DateTime.now().add(Duration(days: 7))
+                  // ],
                   onDateChange: (date) {
                     // New date selected
                     setState(() {

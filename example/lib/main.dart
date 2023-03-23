@@ -63,16 +63,25 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 child: DatePicker(
                   DateTime.now(),
-                  markDateWidget: Icon(Icons.coffee_outlined),
+                  markDateWidget: List.generate(
+                    500,
+                    (index) => index.remainder(2) == 0
+                        ? Icon(Icons.coffee_maker, color: Colors.purple)
+                        : Icon(
+                            Icons.cookie,
+                            color: Colors.pink,
+                          ),
+                  ),
                   width: 60,
                   height: 180,
+                  daysCount: 500,
                   innerWidgetHeight: 90,
                   controller: _controller,
                   initialSelectedDate: DateTime.now(),
-                  selectionColor: Color.fromARGB(255, 99, 114, 107),
-                  dateTextStyle: TextStyle(color: Colors.black),
+                  selectionColor: List.generate(500, (index) => index.remainder(2) == 0 ? Colors.purple : Colors.pink),
+                  dateTextStyle: TextStyle(color: Colors.red),
                   dayTextStyle: TextStyle(color: Colors.black),
-                  selectedTextColor: Colors.black,
+                  selectedTextColor: Colors.yellow,
                   // inactiveDates: [
                   //   DateTime.now().add(Duration(days: 3)),
                   //   DateTime.now().add(Duration(days: 4)),

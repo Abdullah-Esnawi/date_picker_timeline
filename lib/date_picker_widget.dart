@@ -10,7 +10,7 @@ class DatePicker extends StatefulWidget {
   /// If not provided calendar will start from the initialSelectedDate
   final DateTime startDate;
 
-  final Widget markDateWidget;
+  final List<Widget> markDateWidget;
 
   /// Width of the selector
   final double width;
@@ -27,7 +27,7 @@ class DatePicker extends StatefulWidget {
   final Color selectedTextColor;
 
   /// Background color for the selector
-  final Color selectionColor;
+  final List<Color> selectionColor;
 
   /// Text Color for the deactivated dates
   final Color deactivatedColor;
@@ -74,7 +74,7 @@ class DatePicker extends StatefulWidget {
     this.dayTextStyle = defaultDayTextStyle,
     this.dateTextStyle = defaultDateTextStyle,
     this.selectedTextColor = Colors.white,
-    this.selectionColor = AppColors.defaultSelectionColor,
+    this.selectionColor = const [AppColors.defaultSelectionColor],
     this.deactivatedColor = AppColors.defaultDeactivatedColor,
     this.initialSelectedDate,
     this.activeDates,
@@ -86,6 +86,7 @@ class DatePicker extends StatefulWidget {
             activeDates == null || inactiveDates == null,
             "Can't "
             "provide both activated and deactivated dates List at the same time.");
+  // assert(daysCount != markDateWidget.length, "Days Count should be equal to markDateWidget length");
 
   @override
   State<StatefulWidget> createState() => new _DatePickerState();
@@ -117,7 +118,7 @@ class _DatePickerState extends State<DatePicker> {
 
     this.selectedDateStyle = widget.dateTextStyle.copyWith(color: widget.selectedTextColor);
     this.selectedMonthStyle = widget.monthTextStyle.copyWith(color: widget.selectedTextColor);
-    this.selectedDayStyle = widget.dayTextStyle.copyWith(color: widget.selectedTextColor);
+    this.selectedDayStyle = widget.dayTextStyle;
 
     this.deactivatedDateStyle = widget.dateTextStyle.copyWith(color: widget.deactivatedColor);
     this.deactivatedMonthStyle = widget.monthTextStyle.copyWith(color: widget.deactivatedColor);
@@ -172,7 +173,7 @@ class _DatePickerState extends State<DatePicker> {
           // Return the Date Widget
           return DateWidget(
             date: date,
-            markDateWidget: widget.markDateWidget,
+            markDateWidget: widget.markDateWidget[index],
             monthTextStyle: isDeactivated
                 ? deactivatedMonthStyle
                 : isSelected
@@ -182,7 +183,7 @@ class _DatePickerState extends State<DatePicker> {
                 ? deactivatedDateStyle
                 : isSelected
                     ? selectedDateStyle.copyWith(color: Colors.white)
-                    : widget.dateTextStyle,
+                    : widget.dateTextStyle.copyWith(color: widget.selectionColor[index]),
             dayTextStyle: isDeactivated
                 ? deactivatedDayStyle
                 : isSelected
@@ -191,8 +192,8 @@ class _DatePickerState extends State<DatePicker> {
             width: widget.width,
             height: widget.innerWidgetHeight,
             locale: widget.locale,
-            selectionColor: isSelected ? widget.selectionColor : Colors.transparent,
-            unSelectedDateBorderColor: isSelected ? Colors.transparent : widget.selectionColor,
+            selectionColor: isSelected ? widget.selectionColor[index] : Colors.transparent,
+            unSelectedDateBorderColor: isSelected ? Colors.transparent : widget.selectionColor[index],
             onDateSelected: (selectedDate) {
               // Don't notify listener if date is deactivated
               if (isDeactivated) return;

@@ -62,10 +62,14 @@ class DatePicker extends StatefulWidget {
   /// Locale for the calendar default: en_us
   final String locale;
 
+  /// Locale for the calendar default: en_us
+  final bool unselectedCondition;
+
   DatePicker(
     this.startDate, {
     Key? key,
     required this.markDateWidget,
+    this.unselectedCondition = false,
     this.width = 50,
     this.height = 180,
     this.innerWidgetHeight = 80,
@@ -200,10 +204,13 @@ class _DatePickerState extends State<DatePicker> {
 
               // A date is selected
               if (widget.onDateChange != null) {
+                widget.onDateChange!(selectedDate);
+              }
+
+              if (widget.unselectedCondition) {
                 setState(() {
                   _currentDate = selectedDate;
                 });
-                widget.onDateChange!(selectedDate);
               }
             },
           );

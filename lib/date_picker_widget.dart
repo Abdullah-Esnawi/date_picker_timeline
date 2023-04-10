@@ -200,11 +200,11 @@ class _DatePickerState extends State<DatePicker> {
 
               // A date is selected
               if (widget.onDateChange != null) {
+                setState(() {
+                  _currentDate = selectedDate;
+                });
                 widget.onDateChange!(selectedDate);
               }
-              setState(() {
-                _currentDate = selectedDate;
-              });
             },
           );
         },
